@@ -55,6 +55,7 @@ def start_execution():
     start_button['command'] = stop_execution
 
     execution()
+    collecting_statistics()
     print('Started execution...')
 
 
@@ -67,6 +68,15 @@ def stop_execution():
     start_button['text'] = "Start"
     start_button['command'] = start_execution
     print('Paused execution.')
+
+
+def collecting_statistics():
+    for body in space_objects:
+        if body.type == 'planet' and physical_time % 100000 == 0:
+            body.history_distance.append((body.distance, physical_time))
+            body.history_speed.append((body.speed, physical_time))
+    if perform_execution:
+        space.after(101 - int(time_speed.get()), collecting_statistics)
 
 
 def open_file_dialog():
@@ -147,6 +157,10 @@ def main():
     time_label.pack(side=tkinter.RIGHT)
 
     root.mainloop()
+    for body in space_objects:
+        if body.type == 'planet':
+            print(body.history_distance)
+            print(body.history_speed)
     print('Modelling finished!')
 
 if __name__ == "__main__":
