@@ -65,10 +65,9 @@ def create_star_image(space, star):
     **space** — холст для рисования.
     **star** — объект звезды.
     """
-
     x = scale_x(star.x)
     y = scale_y(star.y)
-    r = star.R
+    r = star.r
     star.image = space.create_oval([x - r, y - r], [x + r, y + r], fill=star.color)
 
 
@@ -82,7 +81,7 @@ def create_planet_image(space, planet):
     """
     x = scale_x(planet.x)
     y = scale_y(planet.y)
-    r = planet.R
+    r = planet.r
     planet.image = space.create_oval([x - r, y - r], [x + r, y + r], fill=planet.color)
 
 
@@ -108,7 +107,7 @@ def update_object_position(space, body):
     """
     x = scale_x(body.x)
     y = scale_y(body.y)
-    r = body.R
+    r = body.r
     if x + r < 0 or x - r > window_width or y + r < 0 or y - r > window_height:
         space.coords(body.image, window_width + r, window_height + r,
                      window_width + 2*r, window_height + 2*r)  # положить за пределы окна

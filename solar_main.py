@@ -44,6 +44,7 @@ def execution():
         space.after(101 - int(time_speed.get()), execution)
 
 
+
 def start_execution():
     """Обработчик события нажатия на кнопку Start.
     Запускает циклическое исполнение функции execution.
@@ -135,9 +136,9 @@ def main():
     scale = tkinter.Scale(frame, variable=time_speed, orient=tkinter.HORIZONTAL)
     scale.pack(side=tkinter.LEFT)
 
-    load_file_button = tkinter.Button(frame, text="Open file...", command=open_file_dialog)
+    load_file_button = tkinter.Button(frame, text="Open file", command=open_file_dialog)
     load_file_button.pack(side=tkinter.LEFT)
-    save_file_button = tkinter.Button(frame, text="Save to file...", command=save_file_dialog)
+    save_file_button = tkinter.Button(frame, text="Save to file", command=save_file_dialog)
     save_file_button.pack(side=tkinter.LEFT)
 
     displayed_time = tkinter.StringVar()
