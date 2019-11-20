@@ -6,7 +6,7 @@ from tkinter.filedialog import *
 from solar_vis import *
 from solar_model import *
 from solar_input import *
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 perform_execution = False
 """Флаг цикличности выполнения расчёта"""
@@ -72,16 +72,34 @@ def stop_execution():
 
 
 def collecting_statistics():
-    #distance = []
-    #v = []
     for body in space_objects:
         if body.type == 'planet' and physical_time % 100000 == 0:
-            body.history_distance.append((body.distance, physical_time))
-            body.history_speed.append((body.speed, physical_time))             
-            #for i in range(len(history_distance)):
-        #distance.append(body.history_distance[i[1]])
+            body.history_distance.append((body.distance))
+            body.history_speed.append((body.speed))             
+
     if perform_execution:
         space.after(101 - int(time_speed.get()), collecting_statistics)
+
+
+def show_statistics():
+    for body in space_objects:
+        if body.type == 'planet':
+            plt.figure()
+            plt.plot(body.history_speed)
+            plt.title('speed/time')
+            plt.ylabel('speed')
+            plt.xlabel('time, *10^(5)')
+            plt.figure()
+            plt.plot(body.history_distance)
+            plt.title('distance/time')
+            plt.ylabel('distance')
+            plt.xlabel('time, *10^(5)')
+            plt.figure()
+            plt.plot(body.history_distance, body.history_speed)
+            plt.title('speed/distance')
+            plt.ylabel('speed')
+            plt.xlabel('distance')
+            plt.show()
 
 
 def open_file_dialog():
@@ -153,8 +171,10 @@ def main():
 
     load_file_button = tkinter.Button(frame, text="Open file", command=open_file_dialog)
     load_file_button.pack(side=tkinter.LEFT)
-    save_file_button = tkinter.Button(frame, text="Save to file", command=save_file_dialog)
+    save_file_button = tkinter.Button(frame, text="Save", command=save_file_dialog)
     save_file_button.pack(side=tkinter.LEFT)
+    show_stat_button = tkinter.Button(frame, text="Show stat", command=show_statistics)
+    show_stat_button.pack(side=tkinter.LEFT)
 
     displayed_time = tkinter.StringVar()
     displayed_time.set(str(physical_time) + " seconds gone")
@@ -162,26 +182,9 @@ def main():
     time_label.pack(side=tkinter.RIGHT)
 
     root.mainloop()
-    for body in space_objects:
-        if body.type == 'planet':
-            print(body.history_distance)
-            print(body.history_speed)
-            
-    for i in range(len(speed)):
-        t = i * 100000
-        time.append(t)
-    print(distance)
-    print(speed)
-    print(time)
 
-    plt.plot(time, speed)
-    plt.plot(time, distance)
-    plt.show()
-    
     print('Modelling finished!')
-    
-    
-    
-    
+
+
 if __name__ == "__main__":
     main()

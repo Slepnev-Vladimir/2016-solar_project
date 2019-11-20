@@ -80,9 +80,3 @@ class Planet:
 
     image = None
     """Изображение планеты"""
-
-    distance = 0
-
-    history_distance = []
-
-    history_speed = []

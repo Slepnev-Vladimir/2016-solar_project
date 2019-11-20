@@ -1,0 +1,7 @@
+# Двойная звезда
+Star 30 white 3E32 100E10 0 0 40E3
+Star 30 cyan 1E32 -1E10 0 0 -40E3
+Star 30 cyan 2E32 -100E10 0 0 -40E3
+
+# Земля
+Planet 5 green 5.974E31 500E9 0 0 19.76E3

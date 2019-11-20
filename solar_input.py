@@ -79,6 +79,10 @@ def parse_planet_parameters(line, planet):
     planet.y = float(line.split()[5].lower())
     planet.Vx = float(line.split()[6].lower())
     planet.Vy = float(line.split()[7].lower())
+    planet.distance = 0
+    planet.speed = 0
+    planet.history_speed = []
+    planet.history_distance = []
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
