@@ -9,10 +9,10 @@
 header_font = "Arial-16"
 """Шрифт в заголовке"""
 
-window_width = 720
+window_width = 800
 """Ширина окна"""
 
-window_height = 500
+window_height = 800
 """Высота окна"""
 
 scale_factor = None
@@ -54,7 +54,7 @@ def scale_y(y):
     **y** — y-координата модели.
     """
 
-    return int(y*scale_factor) + window_height//2
+    return y  # FIXME: not done yet
 
 
 def create_star_image(space, star):
@@ -65,9 +65,10 @@ def create_star_image(space, star):
     **space** — холст для рисования.
     **star** — объект звезды.
     """
+
     x = scale_x(star.x)
     y = scale_y(star.y)
-    r = star.r
+    r = star.R
     star.image = space.create_oval([x - r, y - r], [x + r, y + r], fill=star.color)
 
 
@@ -79,10 +80,7 @@ def create_planet_image(space, planet):
     **space** — холст для рисования.
     **planet** — объект планеты.
     """
-    x = scale_x(planet.x)
-    y = scale_y(planet.y)
-    r = planet.r
-    planet.image = space.create_oval([x - r, y - r], [x + r, y + r], fill=planet.color)
+    pass  # FIXME: сделать как у звезды
 
 
 def update_system_name(space, system_name):
@@ -107,7 +105,7 @@ def update_object_position(space, body):
     """
     x = scale_x(body.x)
     y = scale_y(body.y)
-    r = body.r
+    r = body.R
     if x + r < 0 or x - r > window_width or y + r < 0 or y - r > window_height:
         space.coords(body.image, window_width + r, window_height + r,
                      window_width + 2*r, window_height + 2*r)  # положить за пределы окна
