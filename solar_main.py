@@ -6,6 +6,7 @@ from tkinter.filedialog import *
 from solar_vis import *
 from solar_model import *
 from solar_input import *
+import matplotlib as plt
 
 perform_execution = False
 """Флаг цикличности выполнения расчёта"""
@@ -71,10 +72,14 @@ def stop_execution():
 
 
 def collecting_statistics():
+    #distance = []
+    #v = []
     for body in space_objects:
         if body.type == 'planet' and physical_time % 100000 == 0:
             body.history_distance.append((body.distance, physical_time))
-            body.history_speed.append((body.speed, physical_time))
+            body.history_speed.append((body.speed, physical_time))             
+            #for i in range(len(history_distance)):
+        #distance.append(body.history_distance[i[1]])
     if perform_execution:
         space.after(101 - int(time_speed.get()), collecting_statistics)
 
@@ -161,7 +166,22 @@ def main():
         if body.type == 'planet':
             print(body.history_distance)
             print(body.history_speed)
-    print('Modelling finished!')
+            
+    for i in range(len(speed)):
+        t = i * 100000
+        time.append(t)
+    print(distance)
+    print(speed)
+    print(time)
 
+    plt.plot(time, speed)
+    plt.plot(time, distance)
+    plt.show()
+    
+    print('Modelling finished!')
+    
+    
+    
+    
 if __name__ == "__main__":
     main()

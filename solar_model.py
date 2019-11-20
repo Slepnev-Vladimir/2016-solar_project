@@ -4,6 +4,9 @@
 gravitational_constant = 6.67408E-11
 """Гравитационная постоянная Ньютона G"""
 
+distance = []
+time = []
+speed = []
 
 def calculate_force(body, space_objects):
     """Вычисляет силу, действующую на тело.
@@ -19,14 +22,13 @@ def calculate_force(body, space_objects):
         if body == obj:
             continue # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-
+        distance.append(r)
         if body.type == 'planet' and obj.type == 'star':
             body.distance = r
             body.speed = (body.Vx ** 2 + body.Vy ** 2) ** 0.5
-
+            speed.append(body.speed)
         body.Fx += gravitational_constant * obj.m * body.m / r ** 3 * (obj.x - body.x)
         body.Fy += gravitational_constant*obj.m * body.m / r ** 3 * (obj.y - body.y)
-
 
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
