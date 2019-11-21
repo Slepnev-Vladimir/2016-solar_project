@@ -19,9 +19,11 @@ def calculate_force(body, space_objects):
         if body == obj:
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-
-        body.Fx += gravitation_constant*obj.m*body.m/r/r*(obj.x-body.x)  # FIXME: нужно вывести формулу...
-        body.Fy += gravitation_constant*obj.m*body.m/r/r*(obj.y-body.y)  # FIXME: нужно вывести формулу...
+        if body.type == 'planet' and obj.type == 'star':
+            body.distance = r
+            body.speed = (body.Vx ** 2 + body.Vy ** 2) ** 0.5
+        body.Fx += gravitational_constant * obj.m * body.m / r ** 3 * (obj.x - body.x)
+        body.Fy += gravitational_constant*obj.m * body.m / r ** 3 * (obj.y - body.y)
 
 
 def move_space_object(body, dt):
@@ -32,15 +34,14 @@ def move_space_object(body, dt):
     **body** — тело, которое нужно переместить.
     """
 
-    ax = body.Fx/body.m
-    ay = body.Fy/body.m
-    body.Vx += ax*dt
-    body.x += body.Vx # FIXME: не понимаю как менять...
-    
-    body.Vy += ay*dt
-    body.y += body.Vy # FIXME: не понимаю как менять...
-    
-    # FIXME: not done recalculation of y coordinate!
+    ax = body.Fx / body.m
+    ay = body.Fy / body.m
+
+    body.Vx += ax * dt
+    body.x += body.Vx * dt
+
+    body.Vy += ay * dt
+    body.y += body.Vy * dt
 
 
 def recalculate_space_objects_positions(space_objects, dt):
